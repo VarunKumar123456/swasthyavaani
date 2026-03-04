@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SwasthyaVaani - AI Healthcare Assistant</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #3b82f6, #0891b2);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="white" opacity="0.1"/><circle cx="20" cy="80" r="0.5" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>') repeat;
+            opacity: 0.3;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+        }
+
+        .form-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.1);
+            padding: 40px;
+            margin: -60px auto 60px auto;
+            position: relative;
+            z-index: 10;
+            max-width: 800px;
+        }
+
+        .card-btn {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .card-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 40px 30px;
+            border-radius: 20px;
+            background: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            transition: all 0.4s ease;
+            border: none;
+            height: 100%;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 50px rgba(59, 130, 246, 0.15);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px auto;
+            font-size: 2.5rem;
+            color: white;
+        }
+
+        .feature-icon.blue { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+        .feature-icon.purple { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
+        .feature-icon.orange { background: linear-gradient(135deg, #f97316, #ea580c); }
+        .feature-icon.teal { background: linear-gradient(135deg, #0891b2, #0e7490); }
+
+        .impact-section {
+            background: linear-gradient(135deg, #059669, #0891b2);
+            color: white;
+            padding: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .impact-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1.5" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>') repeat;
+        }
+
+        .impact-card {
+            text-align: center;
+            padding: 40px 30px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            height: 100%;
+        }
+
+        .impact-card:hover {
+            transform: translateY(-15px);
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+        }
+
+        .impact-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px auto;
+            font-size: 2.5rem;
+            color: white;
+        }
+
+        .btn-voice {
+            background: linear-gradient(135deg, #059669, #047857);
+            border: none;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(5, 150, 105, 0.3);
+        }
+
+        .btn-voice:hover {
+            background: linear-gradient(135deg, #047857, #065f46);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(5, 150, 105, 0.4);
+            color: white;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #1d4ed8, #1e40af);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+        }
+
+        .form-control, .form-select {
+            border-radius: 12px;
+            border: 2px solid #e5e7eb;
+            padding: 12px 16px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .stats-grid {
+            margin-top: 60px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            color: white;
+        }
+
+        .result-cards .card {
+            margin-bottom: 20px;
+            border-radius: 15px;
+            border: none;
+            overflow: hidden;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            font-size: 1.25rem;
+            opacity: 0.8;
+            margin-bottom: 3rem;
+        }
+
+        .ai-section {
+            padding: 80px 0;
+            background: #f8fafc;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .hero p { font-size: 1.2rem; }
+            .form-container { margin: -40px 15px 40px 15px; padding: 30px 20px; }
+            .section-title { font-size: 2rem; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="hero">
+        <div class="container">
+            <h1>SwasthyaVaani</h1>
+            <p>AI-driven multilingual voice assistant for inclusive rural healthcare and wellness</p>
+            <div class="mx-auto" style="width: 100px; height: 4px; background: rgba(255,255,255,0.3); border-radius: 2px;"></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="form-container">
+            <form method="POST" id="inputForm">
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <label for="language" class="form-label fw-semibold">Select Language</label>
+                        <select class="form-select" name="language" id="language" required>
+                            <option value="en">English</option>
+                            <option value="hi">हिंदी (Hindi)</option>
+                            <option value="te">తెలుగు (Telugu)</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6 mb-4">
+                        <label for="input_mode" class="form-label fw-semibold">Input Mode</label>
+                        <select class="form-select" name="input_mode" id="input_mode" required onchange="toggleInput()">
+                            <option value="text">Text Input</option>
+                            <option value="speech">Speech Input</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mb-4" id="textInputDiv">
+                    <label for="user_input" class="form-label fw-semibold">Describe your symptoms or health concerns</label>
+                    <textarea class="form-control" name="user_input" id="user_input" rows="4" placeholder="e.g., I have fever, headache, and body ache since yesterday..."></textarea>
+                </div>
+
+                <div class="mb-4" id="speechInputDiv" style="display: none;">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <label class="form-label fw-semibold mb-0">Voice Input</label>
+                        <button type="button" class="btn btn-voice" onclick="startSpeechRecognition()">
+                            <i class="bi bi-mic-fill me-2"></i>Start Speaking
+                        </button>
+                    </div>
+                    <textarea class="form-control" name="speech_input" id="speech_input" rows="4" placeholder="Recognized speech will appear here..."></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100" style="padding: 15px; font-size: 1.1rem;">
+                    <i class="bi bi-send-fill me-2"></i>Analyze Health Symptoms
+                </button>
+            </form>
+        </div>
+
+        <!-- Results Section (when available) -->
+        <div id="resultsSection" style="display: none;">
+            <h2 class="text-center mb-5" style="font-size: 2.5rem; font-weight: 700;">Health Analysis Results</h2>
+            
+            <div class="result-cards">
+                <div class="card bg-info text-white card-btn" onclick="playAudio('symptomAudio')">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="card-title mb-0 fw-bold">Extracted Symptoms</h5>
+                            <i class="bi bi-volume-up-fill" style="font-size: 1.2rem;"></i>
+                        </div>
+                        <p class="card-text" id="symptomText">fever, headache, body ache</p>
+                        <audio id="symptomAudio"></audio>
+                    </div>
+                </div>
+
+                <div class="card bg-success text-white card-btn" onclick="playAudio('diseaseAudio')">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="card-title mb-0 fw-bold">Predicted Condition</h5>
+                            <i class="bi bi-volume-up-fill" style="font-size: 1.2rem;"></i>
+                        </div>
+                        <p class="card-text" id="diseaseText">Common Cold</p>
+                        <audio id="diseaseAudio"></audio>
+                    </div>
+                </div>
+
+                <div class="card bg-warning text-dark card-btn" onclick="playAudio('riskAudio')">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="card-title mb-0 fw-bold">Risk Factors</h5>
+                            <i class="bi bi-volume-up-fill" style="font-size: 1.2rem;"></i>
+                        </div>
+                        <p class="card-text" id="riskText">Viral infection, seasonal changes, low immunity</p>
+                        <audio id="riskAudio"></audio>
+                    </div>
+                </div>
+
+                <div class="card bg-secondary text-white card-btn" onclick="playAudio('explanationAudio')">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="card-title mb-0 fw-bold">Simplified Explanation</h5>
+                            <i class="bi bi-volume-up-fill" style="font-size: 1.2rem;"></i>
+                        </div>
+                        <p class="card-text" id="explanationText">A common cold is a viral infection that affects your nose and throat. It's usually harmless and symptoms typically resolve within a week.</p>
+                        <audio id="explanationAudio"></audio>
+                    </div>
+                </div>
+
+                <div class="card bg-dark text-white card-btn" onclick="playAudio('preventiveAudio')">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="card-title mb-0 fw-bold">Preventive Measures</h5>
+                            <i class="bi bi-volume-up-fill" style="font-size: 1.2rem;"></i>
+                        </div>
+                        <p class="card-text" id="preventiveText">Wash hands frequently, avoid close contact with sick people, maintain good hygiene, get adequate rest</p>
+                        <audio id="preventiveAudio"></audio>
+                    </div>
+                </div>
+
+                <div class="card bg-primary text-white card-btn" onclick="playAudio('wellnessAudio')">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="card-title mb-0 fw-bold">Personalized Wellness Recommendations</h5>
+                            <i class="bi bi-volume-up-fill" style="font-size: 1.2rem;"></i>
+                        </div>
+                        <p class="card-text" id="wellnessText">Drink plenty of fluids, take vitamin C, get adequate sleep, practice stress management</p>
+                        <audio id="wellnessAudio"></audio>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Powered by Advanced AI Section -->
+    <section class="ai-section">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title">Powered by Advanced AI</h2>
+                <p class="section-subtitle">Our technology stack combines the latest in AI and machine learning to deliver accurate healthcare insights</p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-lg-3 col-md-6">
+                    <div class="feature-card">
+                        <div class="feature-icon blue">
+                            <i class="bi bi-mic-fill"></i>
+                        </div>
+                        <h5 class="fw-bold mb-3">Speech Recognition</h5>
+                        <p class="text-muted">Advanced STT models for local dialects and multilingual voice processing</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6">
+                    <div class="feature-card">
+                        <div class="feature-icon purple">
+                            <i class="bi bi-brain"></i>
+                        </div>
+                        <h5 class="fw-bold mb-3">NLP & ML</h5>
+                        <p class="text-muted">Entity extraction and disease prediction using advanced machine learning algorithms</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6">
+                    <div class="feature-card">
+                        <div class="feature-icon orange">
+                            <i class="bi bi-lightning-charge-fill"></i>
+                        </div>
+                        <h5 class="fw-bold mb-3">Generative AI</h5>
+                        <p class="text-muted">Simplified medical explanations tailored for rural communities and local understanding</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6">
+                    <div class="feature-card">
+                        <div class="feature-icon teal">
+                            <i class="bi bi-bar-chart-line-fill"></i>
+                        </div>
+                        <h5 class="fw-bold mb-3">Reinforcement Learning</h5>
+                        <p class="text-muted">Personalized wellness recommendations that adapt to individual health patterns</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Expected Impact Section -->
+    <section class="impact-section">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title">Expected Impact</h2>
+                <p class="section-subtitle">Transforming rural healthcare accessibility and outcomes through innovative AI solutions</p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-lg-3 col-md-6">
+                    <div class="impact-card">
+                        <div class="impact-icon">
+                            <i class="bi bi-check-circle-fill"></i>
+                        </div>
+                        <h5 class="fw-bold mb-3">Early Detection</h5>
+                        <p>Improved identification of common rural diseases through AI-powered analysis and symptom recognition</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6">
+                    <div class="impact-card">
+                        <div class="impact-icon">
+                            <i class="bi bi-globe-americas"></i>
+                        </div>
+                        <h5 class="fw-bold mb-3">Health Literacy</h5>
+                        <p>Enhanced understanding through multilingual audio explanations and culturally appropriate content</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6">
+                    <div class="impact-card">
+                        <div class="impact-icon">
+                            <i class="bi bi-heart-pulse-fill"></i>
+                        </div>
+                        <h5 class="fw-bold mb-3">Preventive Care</h5>
+                        <p>Increased awareness through personalized wellness tips and evidence-based preventive measures</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6">
+                    <div class="impact-card">
+                        <div class="impact-icon">
+                            <i class="bi bi-phone-fill"></i>
+                        </div>
+                        <h5 class="fw-bold mb-3">Accessibility</h5>
+                        <p>Low-cost, scalable smartphone solution reaching remote rural communities nationwide</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Statistics -->
+            <div class="stats-grid">
+                <div class="row text-center">
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="stat-item">
+                            <div class="stat-number">100+</div>
+                            <div class="stat-label">Rural Villages</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="stat-item">
+                            <div class="stat-number">10K+</div>
+                            <div class="stat-label">Users Helped</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="stat-item">
+                            <div class="stat-number">3</div>
+                            <div class="stat-label">Languages</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="stat-item">
+                            <div class="stat-number">24/7</div>
+                            <div class="stat-label">Availability</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        let isListening = false;
+
+        function toggleInput() {
+            const mode = document.getElementById('input_mode').value;
+            document.getElementById('textInputDiv').style.display = mode === 'text' ? 'block' : 'none';
+            document.getElementById('speechInputDiv').style.display = mode === 'speech' ? 'block' : 'none';
+        }
+
+        function playAudio(audioId) {
+            const audioElem = document.getElementById(audioId);
+            if (audioElem && audioElem.src) {
+                audioElem.play();
+            } else {
+                // Fallback to text-to-speech
+                const cardBody = document.querySelector(`#${audioId}`).closest('.card-body');
+                const text = cardBody.querySelector('.card-text').textContent;
+                const title = cardBody.querySelector('.card-title').textContent;
+                const fullText = `${title}: ${text}`;
+                
+                if ('speechSynthesis' in window) {
+                    const utterance = new SpeechSynthesisUtterance(fullText);
+                    const language = document.getElementById('language').value;
+                    utterance.lang = language === 'hi' ? 'hi-IN' : 
+                                   language === 'te' ? 'te-IN' : 'en-US';
+                    speechSynthesis.speak(utterance);
+                }
+            }
+        }
+
+        function startSpeechRecognition() {
+            if (isListening) return;
+
+            if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+                alert('Your browser does not support Speech Recognition. Please use Chrome or Edge.');
+                return;
+            }
+
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            const recognition = new SpeechRecognition();
+            
+            const language = document.getElementById('language').value;
+            recognition.lang = language === 'hi' ? 'hi-IN' :
+                              language === 'te' ? 'te-IN' : 'en-US';
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+
+            const button = document.querySelector('.btn-voice');
+            const originalText = button.innerHTML;
+            
+            recognition.onstart = function() {
+                isListening = true;
+                button.innerHTML = '<i class="bi bi-mic-fill me-2 text-danger"></i>Listening...';
+                button.disabled = true;
+            };
+
+            recognition.onresult = function (event) {
+                const speechText = event.results[0][0].transcript;
+                document.getElementById('speech_input').value = speechText;
+            };
+
+            recognition.onerror = function (event) {
+                console.error('Speech recognition error:', event.error);
+                alert('Speech recognition error: ' + event.error);
+            };
+
+            recognition.onend = function() {
+                isListening = false;
+                button.innerHTML = originalText;
+                button.disabled = false;
+            };
+
+            recognition.start();
+        }
+
+        // Handle form submission
+        document.getElementById('inputForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const mode = document.getElementById('input_mode').value;
+            const input = mode === 'text' ? 
+                document.getElementById('user_input').value : 
+                document.getElementById('speech_input').value;
+            
+            if (!input.trim()) {
+                alert('Please provide some symptoms or health concerns.');
+                return;
+            }
+
+            // Show loading state
+            const button = this.querySelector('button[type="submit"]');
+            const originalText = button.innerHTML;
+            button.innerHTML = '<i class="bi bi-hourglass-split me-2"></i>Processing...';
+            button.disabled = true;
+
+            // Simulate processing delay
+            setTimeout(() => {
+                // Show results section
+                document.getElementById('resultsSection').style.display = 'block';
+                
+                // Reset button
+                button.innerHTML = originalText;
+                button.disabled = false;
+                
+                // Scroll to results
+                document.getElementById('resultsSection').scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'start' 
+                });
+                
+                // Show success message
+                alert('Health analysis complete! Click on any result card to hear the audio explanation.');
+            }, 2000);
+        });
+
+        // Add smooth scrolling for better UX
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add animation classes for cards
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all cards
+            document.querySelectorAll('.feature-card, .impact-card').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
+        });
+    </script>
+
+</body>
+
+</html>

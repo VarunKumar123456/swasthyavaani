@@ -1,0 +1,23 @@
+en|fever
+en|headache
+en|nausea
+en|fatigue
+en|cough
+en|sore throat
+en|body pain
+
+hi|बुखार
+hi|सिरदर्द
+hi|मतली
+hi|थकान
+hi|खांसी
+hi|गले में खराश
+hi|शारीरिक दर्द
+
+te|జ్వరము
+te|తల నొప్పి
+te|మలబద్ధకము
+te|దారుణమైన అలసట
+te|కొమ్ము నొప్పి
+te| గొంతు వాపు
+te|శరీర నొప్పి
