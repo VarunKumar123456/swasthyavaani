@@ -1,0 +1,11 @@
+disease,symptoms,risk_factors
+Flu,"fever, headache, cough, fatigue","Cold weather, weakened immunity"
+Migraine,"headache, nausea, fatigue","Stress, irregular sleep, genetics"
+Common Cold,"cough, sore throat, fever","Exposure to infected people, poor hygiene"
+COVID-19,"fever, cough, fatigue, body pain","Travel to affected area, close contact"
+Viral Infection,"fever, body pain, nausea, fatigue","Weakened immunity, poor nutrition"
+Diabetes,"fatigue, frequent urination, increased thirst","Obesity, sedentary lifestyle, genetics"
+Hypertension,"headache, fatigue, dizziness","High salt intake, obesity, stress"
+Asthma,"cough, shortness of breath, wheezing","Allergens, air pollution, respiratory infections"
+Allergy,"sneezing, itchy eyes, rash","Exposure to allergens, genetics"
+Depression,"fatigue, headache, insomnia","Stress, trauma, genetics" 
