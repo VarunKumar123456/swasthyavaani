@@ -57,6 +57,8 @@ Deep learning models for higher accuracy
 Integration with real healthcare datasets
 Mobile application support
 Doctor consultation integration
+
+LIVE : https://swasthyavaani-3.onrender.com/
 👨‍💻 Author
 
 Chitikena Varun Kumar
