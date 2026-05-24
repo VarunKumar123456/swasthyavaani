@@ -1,6 +1,9 @@
 import re
 import nltk
-nltk.download('punkt')
+try:
+    nltk.data.find('tokenizers/punkt')
+except LookupError:
+    nltk.download('punkt')
 
 def basic_nlp_processing(text):
     text = text.lower()
